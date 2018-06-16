@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+
+    <div class="col-4">
+      <h2 align="center">Crear Tareas </h2>
+      <form method="post" align="center">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary"> Crear </button>
+      </form>
+
+    </div>
+    <div class="col-8">
+      Listado
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock content %}
