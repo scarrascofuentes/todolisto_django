@@ -9,6 +9,7 @@ urlpatterns = [
     path('logout',auth_views.LogoutView.as_view(), name="logout"),
     path('home', views.index, name= "home"),
     path('tareas', views.tareas, name= "tareas"),
+    path('crear_tarea', views.crear_tarea, name= "crear_tarea"),
 
 
 
