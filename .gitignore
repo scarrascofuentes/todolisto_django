@@ -1,10 +1,4 @@
 
 db\.sqlite3
 
-main/__pycache__/urls\.cpython-36\.pyc
 
-main/__pycache__/views\.cpython-36\.pyc
-
-todolisto/__pycache__/settings\.cpython-36\.pyc
-
-todolisto/__pycache__/urls\.cpython-36\.pyc
