@@ -3,9 +3,19 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from .models import Tarea
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from .models import Tarea, User
+from .formulario import Registro
 
 # Create your views here.
+
+class RegistroUsuario(CreateView):
+    model = User
+    template_name = 'registration/signup.html'
+    form_class = Registro
+    success_url = reverse_lazy('login')
+
 @login_required()
 def index(request):
     return render(request, 'home.html')
@@ -25,17 +35,3 @@ def crear_tarea(request):
         tarea.save()
     tareas = Tarea.objects.all()
     return render(request, "tareas.html", { 'tareas' : tareas})
-
-def registro(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
