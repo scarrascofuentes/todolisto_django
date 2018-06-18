@@ -1,7 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 
 {% block content %}
 
-HOLA MUNDO DJANGO!!!
+ <h2>Welcome, {{ user.username }}!</h2>
+
+ <a href="{% url 'logout' %}"> <button type="button" class="btn btn-primary" name="button"> logout</button> </a>
 
 {% endblock content %}

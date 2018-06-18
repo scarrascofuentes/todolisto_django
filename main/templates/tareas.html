@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+
+    <div class="col-4">
+      <h2 align="center">Crear Tareas </h2>
+      <form  action="{% url 'crear_tarea' %}" method="post" align="center" >
+        {% csrf_token %}
+        <div class="form-group">
+          Nombre: <br>
+          <input type="text" name="titulo_tarea" class="form-control">
+          Descripción: <br>
+          <input type="text" class="form-control" name="descripcion_tarea">
+          <br>
+
+              <button type="submit" class="btn btn-primary btn-block" > Crear </button>
+
+        </div>
+
+
+      </form>
+
+    </div>
+    <div class="col-5">
+      <h2 align="center">Listado </h2>
+      <hr>
+
+      <table style="width:100%">
+       <tr>
+         <th>Título</th>
+         <th>Descripción</th>
+       </tr>
+       {% for t in tareas %}
+       <tr>
+         <td>{{t.titulo}}</td>
+         <td>{{t.descripcion}}</td>
+       </tr>
+      {% endfor %}
+     </table>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock content %}
