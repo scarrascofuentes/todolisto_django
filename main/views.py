@@ -35,5 +35,5 @@ def crear_tarea(request):
         tarea.descripcion = request.POST.get('descripcion_tarea')
         tarea.usuario = request.user
         tarea.save()
-    tareas = Tarea.objects.all()
+    tareas = Tarea.objects.filter(usuario=request.user)
     return render(request, "tareas.html", { 'tareas' : tareas})
