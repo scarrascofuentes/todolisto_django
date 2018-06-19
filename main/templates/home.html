@@ -1,0 +1,10 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+
+ <h2>Welcome, {{ user.username }}!</h2>
+
+ <a href="{% url 'tareas' %}"> <button type="button" class="btn btn-primary" name="button"> Ver tareas</button> </a>
+ <a href="{% url 'logout' %}"> <button type="button" class="btn btn-secondary" name="button"> Cerrar Sesión</button> </a>
+
+{% endblock content %}

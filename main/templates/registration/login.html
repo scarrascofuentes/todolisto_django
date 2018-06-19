@@ -1,6 +1,16 @@
-<h2>login </h2>
-<form method="post">
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 align="center">Login </h2>
+{% if form.errors %}
+   <p style="color: red">Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<form class="form-horizontal" method="post" align="center">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit"> login </button>
+  <button type="submit" class="btn btn-primary"> Login </button>
 </form>
+
+{% endblock content %}
