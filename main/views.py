@@ -5,7 +5,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
-from .models import Tarea, User
+from django.contrib.auth.models import User
+
+from .models import Tarea
 from .formulario import Registro
 
 # Create your views here.
@@ -22,7 +24,7 @@ def index(request):
 
 @login_required()
 def tareas(request):
-    tareas = Tarea.objects.all()
+    tareas = Tarea.objects.filter(usuario=request.user)
     return render(request, "tareas.html", { 'tareas' : tareas})
 
 @login_required()
@@ -31,7 +33,7 @@ def crear_tarea(request):
         tarea = Tarea()
         tarea.titulo = request.POST.get('titulo_tarea')
         tarea.descripcion = request.POST.get('descripcion_tarea')
-        #tarea.usuario = request.user
+        tarea.usuario = request.user
         tarea.save()
     tareas = Tarea.objects.all()
     return render(request, "tareas.html", { 'tareas' : tareas})
