@@ -6,4 +6,4 @@ from django.contrib.auth.models import User
 class Tarea (models.Model):
     titulo = models.CharField(max_length = 255)
     descripcion = models.CharField(max_length = 255)
-    #usuario = models.ForeignKey(User, on_delete = models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete = models.CASCADE)

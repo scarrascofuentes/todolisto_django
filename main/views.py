@@ -3,16 +3,28 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from django.contrib.auth.models import User
+
 from .models import Tarea
+from .formulario import Registro
 
 # Create your views here.
+
+class RegistroUsuario(CreateView):
+    model = User
+    template_name = 'registration/signup.html'
+    form_class = Registro
+    success_url = reverse_lazy('login')
+
 @login_required()
 def index(request):
     return render(request, 'home.html')
 
 @login_required()
 def tareas(request):
-    tareas = Tarea.objects.all()
+    tareas = Tarea.objects.filter(usuario=request.user)
     return render(request, "tareas.html", { 'tareas' : tareas})
 
 @login_required()
@@ -21,21 +33,7 @@ def crear_tarea(request):
         tarea = Tarea()
         tarea.titulo = request.POST.get('titulo_tarea')
         tarea.descripcion = request.POST.get('descripcion_tarea')
-        #tarea.usuario = request.user
+        tarea.usuario = request.user
         tarea.save()
-    tareas = Tarea.objects.all()
+    tareas = Tarea.objects.filter(usuario=request.user)
     return render(request, "tareas.html", { 'tareas' : tareas})
-
-def registro(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
