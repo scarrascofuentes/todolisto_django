@@ -9,13 +9,23 @@
       <form  action="{% url 'crear_tarea' %}" method="post" align="center" >
         {% csrf_token %}
         <div class="form-group">
+
           Nombre: <br>
-          <input type="text" name="titulo_tarea" class="form-control">
+          <input type="text" class="form-control" name="titulo" >
           Descripción: <br>
-          <input type="text" class="form-control" name="descripcion_tarea">
+          <input type="text" class="form-control" name="descripcion">
+          Tipo: <br>
+          <select class="form-control" name='tipo'>
+              {% for tipo in tipos %}
+                <option value={{tipo.id}} hidden>
+                  {{tipo.nombre}}
+                </option>
+              {% endfor %}
+          </select>
+
           <br>
 
-              <button type="submit" class="btn btn-primary btn-block" > Crear </button>
+          <button type="submit" class="btn btn-primary btn-block" > Crear </button>
 
         </div>
 
