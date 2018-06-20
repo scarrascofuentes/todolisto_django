@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 
@@ -37,3 +37,8 @@ def crear_tarea(request):
         tarea.save()
     tareas = Tarea.objects.filter(usuario=request.user)
     return render(request, "tareas.html", { 'tareas' : tareas})
+
+class EliminarTarea(DeleteView):
+	model = Tarea
+	template_name = 'eliminarTarea.html'
+	success_url = reverse_lazy('tareas')

@@ -1,0 +1,10 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<form method="post">
+	{% csrf_token %}
+	<h3>¿Desea eliminar el registro?</h3>	
+	<button class="btn btn-danger" type="submit">Aceptar</button>
+	<a class= "btn btn-default" href="{% url 'tareas' %}">Cancelar</a>
+</form>
+{% endblock %}
