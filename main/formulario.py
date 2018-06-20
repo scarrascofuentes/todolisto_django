@@ -26,14 +26,17 @@ class TareaForm(forms.ModelForm):
             'titulo',
             'descripcion',
             'usuario',
+            'tipo',
         ]
         labels = {
             'titulo': 'Titulo',
             'descripcion': 'Descripcion',
             'usuario': 'Nombre de Usuario',
+            'tipo': 'Tipo',
         }
         widgets = {
             'titulo': forms.TextInput(attrs={'class':'form-control'}),
             'descripcion': forms.TextInput(attrs={'class':'form-control'}),
             'usuario': forms.Select(attrs={'class':'form-control'}),
+            'tipo': forms.Select(attrs={'class':'form-control'}),
 		}
