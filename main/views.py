@@ -3,12 +3,12 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from django.views.generic import CreateView, DeleteView
+from django.views.generic import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 
 from .models import Tarea
-from .formulario import Registro
+from .formulario import Registro, TareaForm
 
 # Create your views here.
 
@@ -41,4 +41,10 @@ def crear_tarea(request):
 class EliminarTarea(DeleteView):
 	model = Tarea
 	template_name = 'eliminarTarea.html'
+	success_url = reverse_lazy('tareas')
+
+class EditarTarea(UpdateView):
+	model = Tarea
+	form_class = TareaForm
+	template_name = 'formTarea.html'
 	success_url = reverse_lazy('tareas')

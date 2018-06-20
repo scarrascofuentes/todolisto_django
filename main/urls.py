@@ -11,6 +11,7 @@ urlpatterns = [
     path('home', views.index, name= "home"),
     path('tareas', views.tareas, name= "tareas"),
     path('crear_tarea', views.crear_tarea, name= "crear_tarea"),
+    path('editarTarea/<int:pk>', views.EditarTarea.as_view(), name="editarTarea"),
     path('eliminarTarea/<int:pk>', views.EliminarTarea.as_view(), name="eliminarTarea"),
 
 
