@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from django.views.generic import CreateView, DeleteView, UpdateView
+from django.views.generic import CreateView, DeleteView, UpdateView, DetailView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 
@@ -48,3 +48,8 @@ class EditarTarea(UpdateView):
 	form_class = TareaForm
 	template_name = 'formTarea.html'
 	success_url = reverse_lazy('tareas')
+
+class DetalleTarea(DetailView):
+	model = Tarea
+	template_name = 'detalleTarea.html'
+
