@@ -31,11 +31,17 @@
        <tr>
          <th>Título</th>
          <th>Descripción</th>
+         <th>Opciones</th>
        </tr>
        {% for t in tareas %}
        <tr>
          <td>{{t.titulo}}</td>
          <td>{{t.descripcion}}</td>
+         <td>
+            <a class="btn btn-primary" href="">Editar</a>
+            <a class="btn btn-danger" href="">Eliminar</a>
+        </td>
+ 
        </tr>
       {% endfor %}
      </table>
