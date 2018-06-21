@@ -1,0 +1,67 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+
+    <div class="col-4">
+      <h2 align="center">Crear Tareas </h2>
+      <form  action="{% url 'crear_tarea' %}" method="post" align="center" >
+        {% csrf_token %}
+        <div class="form-group">
+
+          Nombre: <br>
+          <input type="text" class="form-control" name="titulo" >
+          Descripción: <br>
+          <input type="text" class="form-control" name="descripcion">
+          Tipo: <br>
+          <select class="form-control" name='tipo'>
+              {% for tipo in tipos %}
+                <option value={{tipo.id}} >
+                  {{tipo.nombre}}
+                </option>
+              {% endfor %}
+          </select>
+
+          <br>
+
+          <button type="submit" class="btn btn-primary btn-block" > Crear </button>
+
+        </div>
+
+
+      </form>
+
+    </div>
+    <div class="col-5">
+      <h2 align="center">Listado </h2>
+      <hr>
+
+      <table style="width:100%">
+       <tr>
+         <th>Título</th>
+         <th>Descripción</th>
+         <th>Opciones</th>
+       </tr>
+       {% for tarea in tareas %}
+       <tr>
+         <td>{{tarea.titulo}}</td>
+         <td>{{tarea.descripcion}}</td>
+         <td>
+            <a class="btn btn-info" href="{% url 'detalleTarea' tarea.id %}">Detalle</a>
+            <a class="btn btn-warning" href="{% url 'editarTarea' tarea.id %}">Editar</a>
+            <a class="btn btn-danger" href="{% url 'eliminarTarea' tarea.id %}">Eliminar</a>
+        </td>
+ 
+       </tr>
+      {% endfor %}
+     </table>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock content %}

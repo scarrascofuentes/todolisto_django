@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    <h1 align = "center"> ¡Sesión cerrada correctamente! </h1>
+    
+    <a align ="center" href="{% url 'login' %}" > 
+        <button type="button" name="button" class="btn btn-primary" >
+             Volver a iniciar 
+        </button> 
+    </a>
+
+{% endblock content %}
