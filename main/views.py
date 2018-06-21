@@ -34,7 +34,7 @@ def crear_tarea(request):
         tarea = Tarea()
         tarea.titulo = request.POST.get('titulo')
         tarea.descripcion = request.POST.get('descripcion')
-        tarea.tipo = request.POST.get('tipo')
+        tarea.tipo = TipoTarea.objects.get(id=(request.POST.get('tipo')))
         tarea.usuario = request.user
         tarea.save()
     tareas = Tarea.objects.filter(usuario=request.user)
@@ -55,4 +55,3 @@ class EditarTarea(UpdateView):
 class DetalleTarea(DetailView):
 	model = Tarea
 	template_name = 'detalleTarea.html'
-
