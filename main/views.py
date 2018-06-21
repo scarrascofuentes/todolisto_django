@@ -7,7 +7,7 @@ from django.views.generic import CreateView, DeleteView, UpdateView, DetailView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 
-from .models import Tarea, TipoTarea
+from .models import Tarea, TipoTarea, EstadoTarea
 from .formulario import Registro, TareaForm
 
 # Create your views here.
@@ -26,7 +26,8 @@ def index(request):
 def tareas(request):
     tareas = Tarea.objects.filter(usuario=request.user)
     tipos = TipoTarea.objects.all()
-    return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos})
+    estados = EstadoTarea.objects.all()
+    return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos, 'estados': estados})
 
 @login_required()
 def crear_tarea(request):
@@ -35,6 +36,7 @@ def crear_tarea(request):
         tarea.titulo = request.POST.get('titulo')
         tarea.descripcion = request.POST.get('descripcion')
         tarea.tipo = TipoTarea.objects.get(id=(request.POST.get('tipo')))
+        tarea.estado = EstadoTarea.objects.get(id=(request.POST.get('estado')))
         tarea.usuario = request.user
         tarea.save()
     tareas = Tarea.objects.filter(usuario=request.user)
