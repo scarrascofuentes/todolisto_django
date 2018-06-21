@@ -23,6 +23,15 @@
               {% endfor %}
           </select>
 
+          Estado: <br>
+          <select class="form-control" name='estado'>
+              {% for estado in estados %}
+                <option value={{estado.id}} >
+                  {{estado.nombre}}
+                </option>
+              {% endfor %}
+          </select>
+
           <br>
 
           <button type="submit" class="btn btn-primary btn-block" > Crear </button>
@@ -52,7 +61,7 @@
             <a class="btn btn-warning" href="{% url 'editarTarea' tarea.id %}">Editar</a>
             <a class="btn btn-danger" href="{% url 'eliminarTarea' tarea.id %}">Eliminar</a>
         </td>
- 
+
        </tr>
       {% endfor %}
      </table>

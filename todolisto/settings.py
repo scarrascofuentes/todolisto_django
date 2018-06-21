@@ -83,8 +83,12 @@ DATABASES = {
         'NAME': 'todolisto',
         'HOST': 'localhost',
         'USER': 'todo',
-        'PASSWORD': 'listo'
+        'PASSWORD': 'listo',
+        'OPTIONS': {
+         "init_command": "SET foreign_key_checks = 0;",
+    },
     }
+
 }
 
 
