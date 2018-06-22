@@ -2,10 +2,10 @@
 
 {% block content %}
 <div class="container">
-  <div class="row">
+  <div class="row" >
 
     <div class="col-4">
-      <h2 align="center">Crear Tareas </h2>
+      <h2 align="center">Crear Tareas</h2>
       <form  action="{% url 'crear_tarea' %}" method="post" align="center" >
         {% csrf_token %}
         <div class="form-group">
@@ -31,6 +31,12 @@
                 </option>
               {% endfor %}
           </select>
+          Fecha de Inicio:
+          <input type="date" class="form-control" name="fechaInicio">
+
+          Fecha de Término:
+          <input type="date" class="form-control" name="fechaTermino">
+
 
           <br>
 
@@ -57,6 +63,7 @@
          <td>{{tarea.titulo}}</td>
          <td>{{tarea.descripcion}}</td>
          <td>
+        <hr>
             <a class="btn btn-info" href="{% url 'detalleTarea' tarea.id %}">Detalle</a>
             <a class="btn btn-warning" href="{% url 'editarTarea' tarea.id %}">Editar</a>
             <a class="btn btn-danger" href="{% url 'eliminarTarea' tarea.id %}">Eliminar</a>
@@ -64,7 +71,17 @@
 
        </tr>
       {% endfor %}
+
      </table>
+
+
+
+    </div>
+
+    <div class="col-3">
+      <h2 align="center"> Calendario de tareas </h2>
+      <hr>
+<a class="btn btn-info" href="{% url 'calendario'  %}">Ver vista del calendario</a>
 
 
     </div>

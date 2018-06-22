@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import date
 
 # Create your models here.
 
@@ -22,3 +23,5 @@ class Tarea (models.Model):
     usuario = models.ForeignKey(User, on_delete = models.CASCADE)
     tipo = models.ForeignKey(TipoTarea, on_delete = models.CASCADE)
     estado = models.ForeignKey(EstadoTarea, on_delete = models.CASCADE)
+    fechaInicio = models.DateField(default=date.today)
+    fechaTermino = models.DateField(default=date.today)

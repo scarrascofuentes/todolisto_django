@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from datetime import date
 from .models import Tarea
 
 class Registro(UserCreationForm):
@@ -28,6 +29,8 @@ class TareaForm(forms.ModelForm):
             'usuario',
             'tipo',
             'estado',
+            'fechaInicio',
+            'fechaTermino',
         ]
         labels = {
             'titulo': 'Titulo',
@@ -35,6 +38,8 @@ class TareaForm(forms.ModelForm):
             'usuario': 'Nombre de Usuario',
             'tipo': 'Tipo',
             'estado': 'Estado',
+            'fechaInicio': 'Fecha de Inicio',
+            'fechaTermino': 'Fecha de Término',
         }
         widgets = {
             'titulo': forms.TextInput(attrs={'class':'form-control'}),
@@ -42,4 +47,7 @@ class TareaForm(forms.ModelForm):
             'usuario': forms.Select(attrs={'class':'form-control'}),
             'tipo': forms.Select(attrs={'class':'form-control'}),
             'estado': forms.Select(attrs={'class':'form-control'}),
+            'fechaInicio': forms.DateInput( format='%d/%m/%Y', attrs={'class':'form-control'} ),
+            'fechaTermino': forms.DateInput(format='%d/%m/%Y', attrs={'class':'form-control'}),
+
 		}
