@@ -6,6 +6,7 @@ from django.contrib.auth import login, authenticate
 from django.views.generic import CreateView, DeleteView, UpdateView, DetailView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 from .models import Tarea, TipoTarea, EstadoTarea
 from .formulario import Registro, TareaForm
@@ -38,6 +39,9 @@ def crear_tarea(request):
         tarea.tipo = TipoTarea.objects.get(id=(request.POST.get('tipo')))
         tarea.estado = EstadoTarea.objects.get(id=(request.POST.get('estado')))
         tarea.usuario = request.user
+        tarea.fechaInicio = request.POST.get('fechaInicio')
+        tarea.fechaTermino = request.POST.get('fechaTermino')
+
         tarea.save()
     tareas = Tarea.objects.filter(usuario=request.user)
     tipos = TipoTarea.objects.all()
@@ -57,3 +61,9 @@ class EditarTarea(UpdateView):
 class DetalleTarea(DetailView):
 	model = Tarea
 	template_name = 'detalleTarea.html'
+
+@login_required()
+def calendario(request):
+    tareas = Tarea.objects.filter(usuario=request.user)
+
+    return render(request, "calendario.html", { 'tareas' : tareas })
