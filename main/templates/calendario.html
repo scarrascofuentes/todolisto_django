@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'baseLoggedOut.html' %}
 
 {% load static %}
 
@@ -14,7 +14,7 @@
                 $('#calendar').fullCalendar({
                 locale: "es",
                 editable: true,
-                weekNumbers: true,
+                weekNumbers: false,
                 eventLimit: true, // allow "more" link when too many events
                 events: [
                     {% for t in tareas %}
