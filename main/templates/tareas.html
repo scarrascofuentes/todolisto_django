@@ -2,10 +2,10 @@
 
 {% block content %}
 <div class="container">
-  <div class="row">
+  <div class="row" >
 
     <div class="col-4">
-      <h2 align="center">Crear Tareas </h2>
+      <h2 align="center">Crear Tareas</h2>
       <form  action="{% url 'crear_tarea' %}" method="post" align="center" >
         {% csrf_token %}
         <div class="form-group">
@@ -23,6 +23,21 @@
               {% endfor %}
           </select>
 
+          Estado: <br>
+          <select class="form-control" name='estado'>
+              {% for estado in estados %}
+                <option value={{estado.id}} >
+                  {{estado.nombre}}
+                </option>
+              {% endfor %}
+          </select>
+          Fecha de Inicio:
+          <input type="date" class="form-control" name="fechaInicio">
+
+          Fecha de Término:
+          <input type="date" class="form-control" name="fechaTermino">
+
+
           <br>
 
           <button type="submit" class="btn btn-primary btn-block" > Crear </button>
@@ -33,29 +48,45 @@
       </form>
 
     </div>
-    <div class="col-5">
-      <h2 align="center">Listado </h2>
-      <hr>
+    <div class="col-sm-1">
 
-      <table style="width:100%">
-       <tr>
-         <th>Título</th>
-         <th>Descripción</th>
-         <th>Opciones</th>
-       </tr>
-       {% for tarea in tareas %}
-       <tr>
-         <td>{{tarea.titulo}}</td>
-         <td>{{tarea.descripcion}}</td>
-         <td>
-            <a class="btn btn-info" href="{% url 'detalleTarea' tarea.id %}">Detalle</a>
-            <a class="btn btn-warning" href="{% url 'editarTarea' tarea.id %}">Editar</a>
-            <a class="btn btn-danger" href="{% url 'eliminarTarea' tarea.id %}">Eliminar</a>
-        </td>
- 
-       </tr>
-      {% endfor %}
-     </table>
+    </div>
+
+    <div class="col-7">
+
+      <h2 class="panel-title" align="center">Listado </h2>
+      <br>
+      <div class="table-responsive">
+
+        <table class="table  table-hover" style="width:100%">
+         <thead>
+           <th>Título</th>
+           <th>Descripción</th>
+           <th style="width: 50%">Opciones</th>
+         </thead>
+
+         {% for tarea in tareas %}
+
+         <tr>
+           <td>{{tarea.titulo}}</td>
+           <td>{{tarea.descripcion}}</td>
+
+           <td>
+
+              <a class="btn btn-info" href="{% url 'detalleTarea' tarea.id %}">Detalle</a>
+              <a class="btn btn-warning" href="{% url 'editarTarea' tarea.id %}">Editar</a>
+              <a class="btn btn-danger" href="{% url 'eliminarTarea' tarea.id %}">Eliminar</a>
+          </td>
+
+        {% endfor %}
+
+       </table>
+       <hr>
+       </div>
+
+
+
+    </div>
 
 
     </div>
