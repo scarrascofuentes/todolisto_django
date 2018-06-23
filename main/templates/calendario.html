@@ -1,6 +1,8 @@
-{% extends 'base2.html' %}
+{% extends 'base.html' %}
 
-      {% load static %}
+{% load static %}
+
+{% block header %}
         <link href='{% static "fullcalendar.min.css" %}' rel='stylesheet' />
         <link href='{% static "fullcalendar.print.min.css" %}' rel='stylesheet' media='print' />
         <script src='{% static "lib/moment.min.js" %}'></script>
@@ -11,59 +13,44 @@
             $(document).ready(function() {
                 $('#calendar').fullCalendar({
                 locale: "es",
-                editable: false,
-                weekNumbers: false,
+                editable: true,
+                weekNumbers: true,
                 eventLimit: true, // allow "more" link when too many events
                 events: [
-                    {% for tarea in tareas %}
+                    {% for t in tareas %}
                         {
-                            title  : '{{ tarea.titulo }}',
-                            start  : '{{ tarea.fechaInicio }}',
-                            url    : '{% url 'tarea' %}?id={{ tarea.id }}'
+                            title  : "{{ t.titulo }}",
+                            start  : '{{ t.fechaInicio }}',
+                            end    : '{{ t.fechaTermino }}',
+                            url    : '{% url 'detalleTarea' t.id %}'
                         },
                     {% endfor %}
                 ]
                 });
             });
         </script>
+        <style>
+            #calendar {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 0;
+                font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+            }
+        </style>
 
-
+{% endblock header %}
 
 {% block content %}
 <div class="container">
     <h1>Calendario</h1>
     <div id='calendar'></div>
+
+
+    {% for t in tareas %}
+
+          {{ t.titulo }}
+          <br>
+
+    {% endfor %}
 </div>
-
-<div class="col-5">
-  <h2 align="center">Listado </h2>
-  <hr>
-
-  <table style="width:100%">
-   <tr>
-     <th>Título</th>
-     <th>Descripción</th>
-     <th>Opciones</th>
-   </tr>
-   {% for tarea in tareas %}
-   <tr>
-     <td>{{tarea.titulo}}</td>
-     <td>{{tarea.descripcion}}</td>
-     <td>
-    <hr>
-        <a class="btn btn-info" href="{% url 'detalleTarea' tarea.id %}">Detalle</a>
-        <a class="btn btn-warning" href="{% url 'editarTarea' tarea.id %}">Editar</a>
-        <a class="btn btn-danger" href="{% url 'eliminarTarea' tarea.id %}">Eliminar</a>
-    </td>
-
-   </tr>
-  {% endfor %}
-
- </table>
-
-
-
-</div>
-
-
 {% endblock content %}

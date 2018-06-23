@@ -48,40 +48,45 @@
       </form>
 
     </div>
-    <div class="col-5">
-      <h2 align="center">Listado </h2>
-      <hr>
+    <div class="col-sm-1">
 
-      <table style="width:100%">
-       <tr>
-         <th>Título</th>
-         <th>Descripción</th>
-         <th>Opciones</th>
-       </tr>
-       {% for tarea in tareas %}
-       <tr>
-         <td>{{tarea.titulo}}</td>
-         <td>{{tarea.descripcion}}</td>
-         <td>
-        <hr>
-            <a class="btn btn-info" href="{% url 'detalleTarea' tarea.id %}">Detalle</a>
-            <a class="btn btn-warning" href="{% url 'editarTarea' tarea.id %}">Editar</a>
-            <a class="btn btn-danger" href="{% url 'eliminarTarea' tarea.id %}">Eliminar</a>
-        </td>
+    </div>
 
-       </tr>
-      {% endfor %}
+    <div class="col-7">
 
-     </table>
+      <h2 class="panel-title" align="center">Listado </h2>
+      <br>
+      <div class="table-responsive">
+
+        <table class="table  table-hover" style="width:100%">
+         <thead>
+           <th>Título</th>
+           <th>Descripción</th>
+           <th style="width: 50%">Opciones</th>
+         </thead>
+
+         {% for tarea in tareas %}
+
+         <tr>
+           <td>{{tarea.titulo}}</td>
+           <td>{{tarea.descripcion}}</td>
+
+           <td>
+
+              <a class="btn btn-info" href="{% url 'detalleTarea' tarea.id %}">Detalle</a>
+              <a class="btn btn-warning" href="{% url 'editarTarea' tarea.id %}">Editar</a>
+              <a class="btn btn-danger" href="{% url 'eliminarTarea' tarea.id %}">Eliminar</a>
+          </td>
+
+        {% endfor %}
+
+       </table>
+       <hr>
+       </div>
 
 
 
     </div>
-
-    <div class="col-3">
-      <h2 align="center"> Calendario de tareas </h2>
-      <hr>
-<a class="btn btn-info" href="{% url 'calendario'  %}">Ver vista del calendario</a>
 
 
     </div>

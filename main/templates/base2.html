@@ -1,5 +1,7 @@
 {% load staticfiles%}
 
+
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -10,6 +12,9 @@
       <!-- Bootstrap CSS -->
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
           crossorigin="anonymous">
+
+          {% block header %}
+          {% endblock %}
     <title>TodoListo</title>
   </head>
   <body>
@@ -23,6 +28,9 @@
                       Home
                       <span class="sr-only">(current)</span>
                   </a>
+              </li>
+              <li class="nav-item">
+                    <a class="nav-link" href="{% url 'calendario' %}">Calendario</a>
               </li>
           </ul>
           <a class="navbar-brand" href="#"> Usuario:  {{user.username}}</a>
