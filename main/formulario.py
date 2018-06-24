@@ -3,22 +3,37 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from datetime import date
 from .models import Tarea
+from django.utils.translation import ugettext_lazy as _
 
-class Registro(UserCreationForm):
+
+
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
     class Meta:
         model = User
-        fields = [
-            'username',
+        fields = (
             'first_name',
             'last_name',
+            'username',
             'email',
-        ]
+            'password1',
+            'password2'
+        )
         labels = {
-            'username': 'Nombre de usuario',
             'first_name': 'Nombre',
             'last_name': 'Apellido',
+            'username': 'Username',
             'email': 'Email',
         }
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class':'form-control'}),
+            'last_name': forms.TextInput(attrs={'class':'form-control'}),
+            'username': forms.TextInput(attrs={'class':'form-control'}),
+            'email': forms.EmailInput(attrs={'class':'form-control'}),
+		}
+
+
+
 
 class TareaForm(forms.ModelForm):
     class Meta:
