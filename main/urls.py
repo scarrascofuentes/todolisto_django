@@ -16,6 +16,7 @@ urlpatterns = [
     path('editarTarea/<int:pk>', views.EditarTarea.as_view(), name="editarTarea"),
     path('eliminarTarea/<int:pk>', views.EliminarTarea.as_view(), name="eliminarTarea"),
     path('calendario', views.CalendarPage.as_view(), name= "calendario"),
+    path('admin', views.admin, name= "admin"),
 
 
 
