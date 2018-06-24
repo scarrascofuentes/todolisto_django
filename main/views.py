@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
@@ -10,18 +10,36 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views.decorators.http import require_GET, require_POST
 from .models import Tarea, TipoTarea, EstadoTarea
-from .formulario import Registro, TareaForm
+from .formulario import RegistrationForm, TareaForm
 
 # Create your views here.
 
 def root(request):
     return redirect('tareas')
 
-class RegistroUsuario(CreateView):
-    model = User
-    template_name = 'registration/signup.html'
-    form_class = Registro
-    success_url = reverse_lazy('login')
+
+#class RegistroUsuario(CreateView):
+#    model = User
+#    form_class = Registro
+#    template_name = 'registration/signup.html'
+#    success_url = reverse_lazy('login')
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Usuario Creado Satisfactoriamente")
+            success_url = reverse_lazy('login')
+    else:
+        form = UserCreationForm()
+        args = {'form': RegistrationForm}
+        return render(request, 'registration/signup.html', args)
+
+    return HttpResponseRedirect(reverse_lazy('login'))
+
+
+
 
 @login_required()
 def index(request):
@@ -52,10 +70,10 @@ def crear_tarea(request):
     estados = EstadoTarea.objects.all()
     return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos, 'estados': estados})
 
-#@login_required()
-#def calendario(request):
-#    tareas = Tarea.objects.filter(usuario=request.user)
-#    return render(request, 'calendario.html', { 'tareas': tareas})
+@login_required()
+def calendar_view(request):
+    tareas = Tarea.objects.filter(usuario=request.user)
+    return render(request, 'calendario.html', { 'tareas': tareas})
 
 class EliminarTarea(DeleteView):
 	model = Tarea
@@ -72,12 +90,3 @@ class EditarTarea(UpdateView):
 class DetalleTarea(DetailView):
 	model = Tarea
 	template_name = 'detalleTarea.html'
-
-
-class CalendarPage(TemplateView):
-    template_name = 'calendario.html'
-    form_class = TareaForm
-    def get_context_data(self, **kwargs):
-        context = super(CalendarPage, self).get_context_data(**kwargs)
-        context['tareas'] = Tarea.objects.all()
-        return context
