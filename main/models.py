@@ -25,6 +25,6 @@ class Tarea (models.Model):
     estado = models.ForeignKey(EstadoTarea, on_delete = models.CASCADE)
     fechaInicio = models.DateField(default=date.today)
     fechaTermino = models.DateField(default=date.today)
-    
+
     def __str__(self):
         return self.titulo
