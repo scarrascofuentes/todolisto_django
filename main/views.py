@@ -12,7 +12,9 @@ from django.views.decorators.http import require_GET, require_POST
 from .models import Tarea, TipoTarea, EstadoTarea
 from .formulario import RegistrationForm, TareaForm
 
-# Create your views here.
+#decorators
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 def root(request):
     return redirect('tareas')
@@ -91,19 +93,20 @@ def crear_tarea(request):
     return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos, 'estados': estados})
 
 
-
+@method_decorator(login_required, name='get')
 class EliminarTarea(DeleteView):
 	model = Tarea
 	template_name = 'eliminarTarea.html'
 	success_url = reverse_lazy('tareas')
 
-
+@method_decorator(login_required, name='get')
 class EditarTarea(UpdateView):
 	model = Tarea
 	form_class = TareaForm
 	template_name = 'formTarea.html'
 	success_url = reverse_lazy('tareas')
 
+@method_decorator(login_required, name='get')
 class DetalleTarea(DetailView):
 	model = Tarea
 	template_name = 'detalleTarea.html'
