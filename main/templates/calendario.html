@@ -1,3 +1,4 @@
+
 {% extends 'baseConectado.html' %}
 
 {% load static %}
@@ -19,9 +20,8 @@
                 events: [
                     {% for t in tareas %}
                         {
-                            title  : "{{ t.titulo }}",
+                            title  : '{{ t.titulo }}',
                             start  : '{{ t.fechaInicio }}',
-                            end    : '{{ t.fechaTermino }}',
                             url    : '{% url 'detalleTarea' t.id %}'
                         },
                     {% endfor %}
@@ -44,13 +44,5 @@
 <div class="container">
     <h1>Calendario</h1>
     <div id='calendar'></div>
-
-
-    {% for t in tareas %}
-
-          {{ t.titulo }}
-          <br>
-
-    {% endfor %}
 </div>
 {% endblock content %}
