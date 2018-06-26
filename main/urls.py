@@ -14,7 +14,8 @@ urlpatterns = [
     path('detalleTarea/<int:pk>', views.DetalleTarea.as_view(), name="detalleTarea"),
     path('editarTarea/<int:pk>', views.EditarTarea.as_view(), name="editarTarea"),
     path('eliminarTarea/<int:pk>', views.EliminarTarea.as_view(), name="eliminarTarea"),
-    path('calendario/', views.calendar_view, name= "calendario"),
+    path('calendario/', views.calendario, name= "calendario"),
+    path('admin', views.admin, name= "admin"),
 
 
 

@@ -46,12 +46,32 @@ def index(request):
     return render(request, 'home.html')
 
 @login_required()
+def admin(request):
+    usuarios = User.objects.all()
+    #cantidad = Tarea.objects.filter(usuario='1').count()
+
+    if request.user.username == 'admin':
+        return render(request, 'admin.html', { 'usuarios' : usuarios})
+    else:
+        return redirect('tareas')
+
+@login_required()
 @require_GET
 def tareas(request):
+
     tareas = Tarea.objects.filter(usuario=request.user)
     tipos = TipoTarea.objects.all()
     estados = EstadoTarea.objects.all()
-    return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos, 'estados': estados})
+    usuarios = User.objects.all()
+
+    if request.user.username == 'admin':
+        return render(request, 'admin.html', { 'usuarios' : usuarios})
+    else:
+        return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos, 'estados': estados})
+
+"""
+CRUD
+"""
 
 @login_required()
 @require_POST
@@ -70,10 +90,7 @@ def crear_tarea(request):
     estados = EstadoTarea.objects.all()
     return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos, 'estados': estados})
 
-@login_required()
-def calendar_view(request):
-    tareas = Tarea.objects.filter(usuario=request.user)
-    return render(request, 'calendario.html', { 'tareas': tareas})
+
 
 class EliminarTarea(DeleteView):
 	model = Tarea
