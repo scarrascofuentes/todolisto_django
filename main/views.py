@@ -1,39 +1,114 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DeleteView, UpdateView, DetailView, TemplateView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
-
-from .models import Tarea
-from .formulario import Registro
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.views.decorators.http import require_GET, require_POST
+from .models import Tarea, TipoTarea, EstadoTarea
+from .formulario import RegistrationForm, TareaForm
 
 # Create your views here.
 
-class RegistroUsuario(CreateView):
-    model = User
-    template_name = 'registration/signup.html'
-    form_class = Registro
-    success_url = reverse_lazy('login')
+def root(request):
+    return redirect('tareas')
+
+
+#class RegistroUsuario(CreateView):
+#    model = User
+#    form_class = Registro
+#    template_name = 'registration/signup.html'
+#    success_url = reverse_lazy('login')
+
+def register(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Usuario Creado Satisfactoriamente")
+            success_url = reverse_lazy('login')
+    else:
+        form = RegistrationForm()
+        args = {'form': RegistrationForm}
+        return render(request, 'registration/signup.html', args)
+
+    return HttpResponseRedirect(reverse_lazy('login'))
+
+
+
 
 @login_required()
 def index(request):
     return render(request, 'home.html')
 
 @login_required()
-def tareas(request):
-    tareas = Tarea.objects.filter(usuario=request.user)
-    return render(request, "tareas.html", { 'tareas' : tareas})
+def admin(request):
+    usuarios = User.objects.all()
+    #cantidad = Tarea.objects.filter(usuario='1').count()
+
+    if request.user.username == 'admin':
+        return render(request, 'admin.html', { 'usuarios' : usuarios})
+    else:
+        return redirect('tareas')
 
 @login_required()
-def crear_tarea(request):
-    if request.method == 'POST':
-        tarea = Tarea()
-        tarea.titulo = request.POST.get('titulo_tarea')
-        tarea.descripcion = request.POST.get('descripcion_tarea')
-        tarea.usuario = request.user
-        tarea.save()
+@require_GET
+def tareas(request):
+
     tareas = Tarea.objects.filter(usuario=request.user)
-    return render(request, "tareas.html", { 'tareas' : tareas})
+    tipos = TipoTarea.objects.all()
+    estados = EstadoTarea.objects.all()
+    usuarios = User.objects.all()
+
+    if request.user.username == 'admin':
+        return render(request, 'admin.html', { 'usuarios' : usuarios})
+    else:
+        return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos, 'estados': estados})
+
+"""
+CRUD
+"""
+
+@login_required()
+@require_POST
+def crear_tarea(request):
+    tarea = Tarea()
+    tarea.titulo = request.POST.get('titulo')
+    tarea.descripcion = request.POST.get('descripcion')
+    tarea.tipo = TipoTarea.objects.get(id=(request.POST.get('tipo')))
+    tarea.estado = EstadoTarea.objects.get(id=(request.POST.get('estado')))
+    tarea.usuario = request.user
+    tarea.fechaInicio = request.POST.get('fechaInicio')
+    tarea.fechaTermino = request.POST.get('fechaTermino')
+    tarea.save()
+    tareas = Tarea.objects.filter(usuario=request.user)
+    tipos = TipoTarea.objects.all()
+    estados = EstadoTarea.objects.all()
+    return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos, 'estados': estados})
+
+
+
+class EliminarTarea(DeleteView):
+	model = Tarea
+	template_name = 'eliminarTarea.html'
+	success_url = reverse_lazy('tareas')
+
+
+class EditarTarea(UpdateView):
+	model = Tarea
+	form_class = TareaForm
+	template_name = 'formTarea.html'
+	success_url = reverse_lazy('tareas')
+
+class DetalleTarea(DetailView):
+	model = Tarea
+	template_name = 'detalleTarea.html'
+
+@login_required()
+def calendario(request):
+    tareas = Tarea.objects.filter(usuario=request.user)
+    return render(request, "calendario.html", { 'tareas' : tareas })

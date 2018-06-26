@@ -1,4 +1,4 @@
-{% extends 'baseDesconectado.html' %}
+{% extends 'baseConectado.html' %}
 
 {% block content %}
 
@@ -10,8 +10,11 @@
 
             <form method="post">
                 {% csrf_token %}
+
                 {{ form.as_p }}
-                <button type="submit"> Sign In </button>
+
+                <button class="btn btn-primary" type="submit">Guardar</button>
+
             </form>
         </div>
 

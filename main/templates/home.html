@@ -1,10 +1,21 @@
-{% extends 'base2.html' %}
+{% extends 'baseConectado.html' %}
 
 {% block content %}
 
- <h2>Welcome, {{ user.username }}!</h2>
+<div class="row justify-content-md-center">
 
- <a href="{% url 'tareas' %}"> <button type="button" class="btn btn-primary" name="button"> Ver tareas</button> </a>
- <a href="{% url 'logout' %}"> <button type="button" class="btn btn-secondary" name="button"> Cerrar Sesión</button> </a>
+    <div class="col-md-auto">
+        <h2>Bienvenido, {{ user.username }}!</h2>
+
+        <a href="{% url 'tareas' %}"> 
+            <button type="button" class="btn btn-primary" name="button">
+                 Ver tareas
+            </button> 
+        </a>
+
+    </div>
+</div>
+
+ 
 
 {% endblock content %}
