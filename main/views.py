@@ -26,13 +26,13 @@ def root(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, "Usuario Creado Satisfactoriamente")
             success_url = reverse_lazy('login')
     else:
-        form = UserCreationForm()
+        form = RegistrationForm()
         args = {'form': RegistrationForm}
         return render(request, 'registration/signup.html', args)
 
