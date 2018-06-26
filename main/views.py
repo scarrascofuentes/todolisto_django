@@ -107,3 +107,8 @@ class EditarTarea(UpdateView):
 class DetalleTarea(DetailView):
 	model = Tarea
 	template_name = 'detalleTarea.html'
+
+@login_required()
+def calendario(request):
+    tareas = Tarea.objects.filter(usuario=request.user)
+    return render(request, "calendario.html", { 'tareas' : tareas })
