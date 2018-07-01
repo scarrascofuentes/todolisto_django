@@ -35,64 +35,82 @@
           <input type="date" class="form-control" name="fechaInicio">
 
           Fecha de Término:
-          <input type="date" class="form-control" name="fechaTermino">
+          <input type="date" class="form-control" name="fechaTermino">  <br>
+          {% if messages %}
+            <div class="message" >
 
+               <ul>
+                 {% for message in messages %}
+                   <a id="linkClose" href="../tareas" class="close">&times;</a>
+                   <li id="myAlert" class="{{ message.tags }}" > {{ message }}</li>
+                 {% endfor %}
+               </ul>
+           </div>
+         {% endif %}
 
-          <br>
+          <button  id="btnSubmit" type="submit" class="btn btn-primary btn-block" > Crear </button>
 
-          <button type="submit" class="btn btn-primary btn-block" > Crear </button>
+         <script type="text/javascript">
+           $(document).ready(function () {
 
-        </div>
+               $('#btnSubmit').click(function () {
+                   $('#myAlert').show('fade');
 
+                   setTimeout(function () {
+                       $('#myAlert').hide('fade');
+                   }, 2000);
 
+               });
+
+               $('#linkClose').click(function () {
+                   $('#myAlert').hide('fade');
+               });
+
+            });
+          </script>
+
+        </div> <!-- cierra div class form -->
+     </table>
+           <hr>
+        </d
       </form>
 
-    </div>
+    </div> <!-- cierra div class col-4 -->
+
     <div class="col-sm-1">
-
+      <!-- espacio entre div's -->
     </div>
 
-    <div class="col-7">
+      <div class="col-7">
+        <h2 class="panel-title" align="center">Listado </h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table  table-hover" style="width:100%">
+             <thead>
+               <th>Título</th>
+               <th>Descripción</th>
+               <th style="width: 50%">Opciones</th>
+             </thead>
 
-      <h2 class="panel-title" align="center">Listado </h2>
-      <br>
-      <div class="table-responsive">
+             {% for tarea in tareas %}
 
-        <table class="table  table-hover" style="width:100%">
-         <thead>
-           <th>Título</th>
-           <th>Descripción</th>
-           <th style="width: 50%">Opciones</th>
-         </thead>
+             <tr>
+               <td>{{tarea.titulo}}</td>
+               <td>{{tarea.descripcion}}</td>
 
-         {% for tarea in tareas %}
+               <td>
 
-         <tr>
-           <td>{{tarea.titulo}}</td>
-           <td>{{tarea.descripcion}}</td>
+                  <a class="btn btn-info" href="{% url 'detalleTarea' tarea.id %}">Detalle</a>
+                  <a class="btn btn-warning" href="{% url 'editarTarea' tarea.id %}">Editar</a>
+                  <a class="btn btn-danger" href="{% url 'eliminarTarea' tarea.id %}">Eliminar</a>
+              </td>
 
-           <td>
-
-              <a class="btn btn-info" href="{% url 'detalleTarea' tarea.id %}">Detalle</a>
-              <a class="btn btn-warning" href="{% url 'editarTarea' tarea.id %}">Editar</a>
-              <a class="btn btn-danger" href="{% url 'eliminarTarea' tarea.id %}">Eliminar</a>
-          </td>
-
-        {% endfor %}
-
-       </table>
-       <hr>
-       </div>
-
-
-
-    </div>
-
-
-    </div>
-
-  </div>
-
-</div>
+            {% endfor %}
+           </table>
+           <hr>
+        </div> <!-- cierra div table-responsive -->
+    </div> <!-- cierra div col-7 -->
+  </div> <!-- cierra div class row -->
+</div> <!-- cierra div class container -->
 
 {% endblock content %}
