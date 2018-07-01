@@ -40,10 +40,6 @@ class RegistrationForm(UserCreationForm):
             user.save()
         return user
 
-
-
-
-
 class TareaForm(forms.ModelForm):
     class Meta:
         model = Tarea

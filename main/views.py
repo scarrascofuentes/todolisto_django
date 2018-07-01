@@ -12,17 +12,12 @@ from django.views.decorators.http import require_GET, require_POST
 from .models import Tarea, TipoTarea, EstadoTarea
 from .formulario import RegistrationForm, TareaForm
 
-# Create your views here.
+#decorators
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 def root(request):
     return redirect('tareas')
-
-
-#class RegistroUsuario(CreateView):
-#    model = User
-#    form_class = Registro
-#    template_name = 'registration/signup.html'
-#    success_url = reverse_lazy('login')
 
 def register(request):
     if request.method == 'POST':
@@ -37,9 +32,6 @@ def register(request):
         return render(request, 'registration/signup.html', args)
 
     return HttpResponseRedirect(reverse_lazy('login'))
-
-
-
 
 @login_required()
 def index(request):
@@ -84,26 +76,34 @@ def crear_tarea(request):
     tarea.usuario = request.user
     tarea.fechaInicio = request.POST.get('fechaInicio')
     tarea.fechaTermino = request.POST.get('fechaTermino')
-    tarea.save()
     tareas = Tarea.objects.filter(usuario=request.user)
     tipos = TipoTarea.objects.all()
     estados = EstadoTarea.objects.all()
-    return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos, 'estados': estados})
+
+    if(tarea.fechaInicio <= tarea.fechaTermino):
+        tarea.save()
+        messages.success(request, "Tarea creada con éxito!")
+        return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos, 'estados': estados})
+    else:
+        messages.error(request,'La fecha de término debe ser posterior a la fecha de inicio!')
+        return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos, 'estados': estados})
 
 
 
+@method_decorator(login_required, name='get')
 class EliminarTarea(DeleteView):
 	model = Tarea
 	template_name = 'eliminarTarea.html'
 	success_url = reverse_lazy('tareas')
 
-
+@method_decorator(login_required, name='get')
 class EditarTarea(UpdateView):
 	model = Tarea
 	form_class = TareaForm
 	template_name = 'formTarea.html'
 	success_url = reverse_lazy('tareas')
 
+@method_decorator(login_required, name='get')
 class DetalleTarea(DetailView):
 	model = Tarea
 	template_name = 'detalleTarea.html'
