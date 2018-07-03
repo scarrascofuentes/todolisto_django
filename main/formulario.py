@@ -67,7 +67,7 @@ class TareaForm(forms.ModelForm):
             'usuario': forms.Select(attrs={'class':'form-control'}),
             'tipo': forms.Select(attrs={'class':'form-control'}),
             'estado': forms.Select(attrs={'class':'form-control'}),
-            'fechaInicio': forms.DateInput( format='%d/%m/%Y', attrs={'class':'form-control'} ),
+            'fechaInicio': forms.DateInput(format='%d/%m/%Y', attrs={'class':'form-control'}),
             'fechaTermino': forms.DateInput(format='%d/%m/%Y', attrs={'class':'form-control'}),
 
 		}
