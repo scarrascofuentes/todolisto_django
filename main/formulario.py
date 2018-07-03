@@ -8,7 +8,6 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
     class Meta:
         model = User
         fields = (
@@ -31,9 +30,15 @@ class RegistrationForm(UserCreationForm):
             'username': forms.TextInput(attrs={'class':'form-control'}),
             'email': forms.EmailInput(attrs={'class':'form-control'}),
 		}
+    def save(self, commit=True):
+        user = super(RegistrationForm, self).save(commit=False)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
 
-
-
+        if commit:
+            user.save()
+        return user
 
 class TareaForm(forms.ModelForm):
     class Meta:
