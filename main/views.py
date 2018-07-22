@@ -52,12 +52,13 @@ def admin(request):
 def tareas(request):
 
     tareas = Tarea.objects.filter(usuario=request.user)
+    tareasAdmin = Tarea.objects.all()
     tipos = TipoTarea.objects.all()
     estados = EstadoTarea.objects.all()
     usuarios = User.objects.all()
 
     if request.user.username == 'admin':
-        return render(request, 'admin.html', { 'usuarios' : usuarios})
+        return render(request, 'admin.html', { 'usuarios' : usuarios , 'tareasAdmin' : tareasAdmin})
     else:
         return render(request, "tareas.html", { 'tareas' : tareas, 'tipos': tipos, 'estados': estados})
 
