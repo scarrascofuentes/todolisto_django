@@ -28,13 +28,13 @@ Respecto a la instalacion:
 Respecto a la ejecucion:
 
   * Iniciar, en XAMPP, los siguiente modulos:
-    - 'Apache'
-    - 'MySQL' 
+    - `Apache`
+    - `MySQL`
 
   * Se debe activar el proyecto en la consola de anaconda (Anaconda Prompt):
-    > source activate todolisto
-    > cd todolisto
-    > python manage.py runserver
+    - source activate todolisto
+    - cd todolisto
+    - python manage.py runserver
   
   * Se debe crear obligatoriamente un usuario con username: 'admin', quien será el administrador del sistema
 
@@ -51,16 +51,31 @@ Respecto a los modelos:
 
 Respecto a las vistas:
 
-  * COMPLETAR
+  * Se tienen las siguientes vistas:
+    - 'registro': Registro de nuevos usuarios
+    - 'login': Iniciar sesión 
+    - 'home': Inicio
+    - 'tareas': Tareas de un usuario
+    - 'tareasAdmin': Tareas de todos los usuarios
+    - 'borrarTarea': Eliminar tarea
+    - 'detalleTarea': Detalle de tarea
+    - 'editarTarea': Edición de tarea
+    - 'calendario': Calendario de tareas de un usuario
+
+
 
 Respecto a la base de datos:
 
   * Debe crear una base de datos denomidada 'todolisto'. Para esto es necesario aplicar los siguientes comandos en la consola (shell) de XAMPP:
 
     > mysql -u root -p
+
     > CREATE DATABASE todolisto;
+
     > CREATE USER ‘todo’@’%’ IDENTIFIED BY ‘listo’;
+
     > GRANT ALL PRIVILEGES ON todolisto.* TO ‘todo’@’%’;
+
     > FLUSH PRIVILEGES;
   
   * Es necesario ingresar los nombres de los host y la cuenta de usuario por defecto con la contraseña en el archivo 'php.ini' (C:\xampp\php), en el nivel siguiente:
