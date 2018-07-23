@@ -1,0 +1,21 @@
+{% extends 'baseConectado.html' %}
+
+{% block content %}
+
+<div class="row justify-content-md-center">
+
+    <div class="col-md-auto">
+        <h2>Bienvenido, {{ user.username }}!</h2>
+
+        <a href="{% url 'tareas' %}"> 
+            <button type="button" class="btn btn-primary" name="button">
+                 Ver tareas
+            </button> 
+        </a>
+
+    </div>
+</div>
+
+ 
+
+{% endblock content %}

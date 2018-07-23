@@ -1,0 +1,115 @@
+{% extends 'baseConectado.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row" >
+
+    <div class="col-4">
+      <h2 align="center">Crear Tareas</h2>
+      <form  action="{% url 'crear_tarea' %}" method="post" align="center" >
+        {% csrf_token %}
+        <div class="form-group">
+
+          Nombre: <br>
+          <input type="text" class="form-control" name="titulo" >
+          Descripción: <br>
+          <input type="text" class="form-control" name="descripcion">
+          Tipo: <br>
+          <select class="form-control" name='tipo'>
+              {% for tipo in tipos %}
+                <option value={{tipo.id}} >
+                  {{tipo.nombre}}
+                </option>
+              {% endfor %}
+          </select>
+
+          Estado: <br>
+          <select class="form-control" name='estado'>
+              {% for estado in estados %}
+                <option value={{estado.id}} >
+                  {{estado.nombre}}
+                </option>
+              {% endfor %}
+          </select>
+          Fecha de Inicio:
+          <input type="date" class="form-control" name="fechaInicio">
+
+          Fecha de Término:
+          <input type="date" class="form-control" name="fechaTermino">  <br>
+          {% if messages %}
+            <div class="message" >
+
+               <ul>
+                 {% for message in messages %}
+                   <a id="linkClose" href="../tareas" class="close">&times;</a>
+                   <li id="myAlert" class="{{ message.tags }}" > {{ message }}</li>
+                 {% endfor %}
+               </ul>
+           </div>
+         {% endif %}
+
+          <button  id="btnSubmit" type="submit" class="btn btn-primary btn-block" > Crear </button>
+
+         <script type="text/javascript">
+           $(document).ready(function () {
+
+               $('#btnSubmit').click(function () {
+                   $('#myAlert').show('fade');
+
+                   setTimeout(function () {
+                       $('#myAlert').hide('fade');
+                   }, 2000);
+
+               });
+
+               $('#linkClose').click(function () {
+                   $('#myAlert').hide('fade');
+               });
+
+            });
+          </script>
+
+        </div> <!-- cierra div class form -->
+     </table>
+           <hr>
+        </d
+      </form>
+
+    </div> <!-- cierra div class col-4 -->
+
+    <div class="col-sm-1">
+      <!-- espacio entre div's -->
+    </div>
+
+      <div class="col-7">
+        <h2 class="panel-title" align="center">Listado </h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table  table-hover" style="width:100%">
+             <thead>
+               <th>Título</th>
+               <th>Descripción</th>
+               <th style="width: 50%">Opciones</th>
+             </thead>
+
+             {% for tarea in tareas %}
+
+             <tr>
+               <td>{{tarea.titulo}}</td>
+               <td>{{tarea.descripcion}}</td>
+
+               <td>
+                  <a class="btn btn-info" href="{% url 'detalleTarea' %}?id={{ tarea.id }}">Detalle</a>
+                  <a class="btn btn-warning" href="{% url 'editarTarea' tarea.id %}">Editar</a>
+                  <a class="btn btn-danger" href="{% url 'eliminarTarea'%}?id={{ tarea.id }}">Eliminar</a>
+              </td>
+
+            {% endfor %}
+           </table>
+           <hr>
+        </div> <!-- cierra div table-responsive -->
+    </div> <!-- cierra div col-7 -->
+  </div> <!-- cierra div class row -->
+</div> <!-- cierra div class container -->
+
+{% endblock content %}

@@ -1,0 +1,7 @@
+{% extends 'baseConectado.html' %}
+
+{% block content %}
+	{% csrf_token %}
+	<h1>La tarea se eliminó correctamente </h1>
+	<a class= "btn btn-default" href="{% url 'tareas' %}"> Ir a vista de tareas</a>
+{% endblock %}
